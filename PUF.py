@@ -2,8 +2,9 @@ import hashlib
 import random
 
 array = []
-mux1 = [1000]
-mux2 = [1000]
+mux1 = []
+mux2 = []
+ropuf = []
 password = input('使用者輸入密碼:')
 print('使用者密碼:', password)
 hash_password = hashlib.sha256(password.encode(
@@ -38,35 +39,45 @@ for n in binaryString:
     if n == '1':  # 比大
         if array[i] > array[256+i]:
             print(array[i])
-            #mux1[1] = array[i]
+            mux1 = array[i]
 
         elif array[i] < array[256+i]:
             print(array[256+i])
-            #mux1[i] = array[256+i]
+            mux1 = array[256+i]
 
         elif array[512+i] > array[768+i]:
             print(array[512+i])
-           # mux2[i] = array[512+i]
+            mux2 = array[512+i]
 
         else:
             print(array[768+i])
-            #mux2[i] = array[768+i]
+            mux2 = array[768+i]
 
     else:  # 比小
         if array[i] < array[256+i]:
             print(array[i])
-            #mux1[i] = array[i]
+            mux1 = array[i]
 
         elif array[i] > array[256+i]:
             print(array[256+i])
-            #mux1[i] = array[256+i]
+            mux1 = array[256+i]
 
         elif array[512+i] > array[768+i]:
             print(array[768+i])
-            #mux2[i] = array[768+i]
+            mux2 = array[768+i]
 
         else:
             print(array[512+i])
-           # mux2[i] = array[512+i]
+            mux2 = array[512+i]
 
     i += 1
+print("RO PUF:")
+for a in range(mux1):
+    for b in range(mux2):
+        if a > b:
+            popuf = 1
+            print(popuf, end="")
+
+        elif a < b:
+            popuf = 0
+            print(popuf, end="")
