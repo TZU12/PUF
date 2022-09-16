@@ -7,8 +7,7 @@ mux2 = []
 ropuf = []
 password = input('使用者輸入密碼:')
 print('使用者密碼:', password)
-hash_password = hashlib.sha256(password.encode(
-    "utf-8")).hexdigest()  # 用sha256對password進行加密
+hash_password = hashlib.sha256(password.encode("utf-8")).hexdigest()  # 用sha256對password進行加密
 print("十六進位:", hash_password)
 number = int(hash_password, 16)
 print("十進位:", number)  # 十六轉十
@@ -22,62 +21,61 @@ print("二進位: ", binaryString)
 print()
 array = [random.randint(10, 99) for x in range(1024)]
 print(len(array))  # 1024個
+mux1 = array[0:256]
+mux2 = array[0:256]
+ropuf = array[0:256]
 print("--------------------第一組--------------------")
-print(array[0:256])
+array1 = array[0:256]
+print(len(array1))
 print()
 print("--------------------第二組--------------------")
-print(array[256:512])
+array2 = array[256:512]
+print(len(array2))
 print()
 print("--------------------第三組--------------------")
-print(array[512:768])
+array3 = array[512:768]
+print(len(array3))
 print()
 print("--------------------第四組--------------------")
-print(array[768:1024])
+array4 = array[768:1024]
+print(len(array4))
 print()
 i = 0
-for n in binaryString:
-    if n == '1':  # 比大
-        if array[i] > array[256+i]:
-            print(array[i])
-            mux1 = array[i]
+for n in range(0, 256):
+    if binaryString[n] == '1':  # 比大
+        if array1[n] >= array2[n]:
+            mux1[n] = array1[n]
 
-        elif array[i] < array[256+i]:
-            print(array[256+i])
-            mux1 = array[256+i]
+        elif array1[n] < array2[n]:
+            mux1[n] = array2[n]
 
-        elif array[512+i] > array[768+i]:
-            print(array[512+i])
-            mux2 = array[512+i]
+        if array3[n] >= array4[n]:
+            mux2[n] = array3[n]
 
-        else:
-            print(array[768+i])
-            mux2 = array[768+i]
+        elif array3[n] <= array4[n]:
+            mux2[n] = array4[n]
 
     else:  # 比小
-        if array[i] < array[256+i]:
-            print(array[i])
-            mux1 = array[i]
+        if array1[n] <= array2[n]:
+            mux1[n] = array1[i]
 
-        elif array[i] > array[256+i]:
-            print(array[256+i])
-            mux1 = array[256+i]
+        elif array1[n] > array2[n]:
+            mux1[n] = array2[n]
 
-        elif array[512+i] > array[768+i]:
-            print(array[768+i])
-            mux2 = array[768+i]
 
-        else:
-            print(array[512+i])
-            mux2 = array[512+i]
+        if array3[n] <= array4[n]:
+            mux2[n] = array3[n]
 
-    i += 1
+        elif array3[n] >= array4[n]:
+            mux2[n] = array4[n]
+            
 print("RO PUF:")
-for a in range(mux1):
-    for b in range(mux2):
-        if a > b:
-            popuf = 1
-            print(popuf, end="")
 
-        elif a < b:
-            popuf = 0
-            print(popuf, end="")
+for i in range(0, 256):
+    if mux1[i] > mux2[i]:
+        ropuf[i] = 1
+
+    else:
+        ropuf[i] = 0
+
+print(len(ropuf))
