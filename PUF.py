@@ -5,9 +5,14 @@ array = []
 mux1 = []
 mux2 = []
 ropuf = []
+change = []
+sum = []
+sum1 = []
+sum3 = []
 password = input('使用者輸入密碼:')
 print('使用者密碼:', password)
-hash_password = hashlib.sha256(password.encode("utf-8")).hexdigest()  # 用sha256對password進行加密
+hash_password = hashlib.sha256(password.encode(
+    "utf-8")).hexdigest()  # 用sha256對password進行加密
 print("十六進位:", hash_password)
 number = int(hash_password, 16)
 print("十進位:", number)  # 十六轉十
@@ -62,13 +67,12 @@ for n in range(0, 256):
         elif array1[n] > array2[n]:
             mux1[n] = array2[n]
 
-
         if array3[n] <= array4[n]:
             mux2[n] = array3[n]
 
         elif array3[n] >= array4[n]:
             mux2[n] = array4[n]
-            
+
 print("RO PUF:")
 
 for i in range(0, 256):
@@ -78,4 +82,12 @@ for i in range(0, 256):
     else:
         ropuf[i] = 0
 
-print(len(ropuf))
+print(ropuf)
+print()
+
+print("交換位移量:")
+change = ropuf[0:8]
+print(change)
+sum = change[0]*1+change[1]*2+change[2]*4 + change[3] * \
+    6+ropuf[4]*8+change[5]*10+change[6]*12+change[7]*14
+print(sum)
