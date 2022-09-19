@@ -21,7 +21,7 @@ binaryString = ""
 while decimalValue != 0:
     binaryString = str(decimalValue % 2) + binaryString
     decimalValue //= 2
-print("二進位: ", binaryString)
+print("二進位: ", str(binaryString))
 # print(list(binaryString))
 print()
 array = [random.randint(10, 99) for x in range(1024)]
@@ -46,7 +46,9 @@ array4 = array[768:1024]
 print(len(array4))
 print()
 i = 0
+print(len(str(binaryString)))
 for n in range(0, 256):
+    
     if binaryString[n] == '1':  # 比大
         if array1[n] >= array2[n]:
             mux1[n] = array1[n]
@@ -91,3 +93,15 @@ print(change)
 sum = change[0]*1+change[1]*2+change[2]*4 + change[3] * \
     6+ropuf[4]*8+change[5]*10+change[6]*12+change[7]*14
 print(sum)
+
+last=array[0:256]
+i=0
+for n in range(0, 256):
+    try:
+        last[n+sum]=ropuf[n]
+    except:
+        last[i]=ropuf[n]
+        i=i+1
+
+print(ropuf[0:50])
+print(last[0:50])
